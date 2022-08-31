@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+   
+    <script defer src="script.js"></script>
+    <link href="style.css" rel="stylesheet"></link>
+    <link
+      href="https://fonts.googleapis.com/css?family=Bungee+Outline&display=swap"
+      rel="stylesheet"
+    />
+    <title>Event Delegation is cool!</title>
+  </head>
+  <body>
+    <div id='score-board'>
+      <div id='dealer-score'></div>
+      <div id='user-score'></div>
+    </div>
+
+<div id='dealer-space' class='player-div'>
+  <div id='dealer-card' class='card'></div>
+</div>
+
+<div id='user-space' class='player-div'>
+  <div id='user-card' class='card'></div>
+</div>
+
+<div id='control-panel'>
+  <button id='deal-btn' style='visibility:visible'>Deal</button>
+  <button id='hit-btn'>Hit</button>
+  <button id='stand-btn'>Stand</button>
+  <button id='new-round-btn'>New Round</button>
+</div>
+</body>
+</html>

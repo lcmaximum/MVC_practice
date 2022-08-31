@@ -1,0 +1,18 @@
+.player-div {
+  min-height: 150px;
+  border: solid;
+}
+
+button {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  min-width: 40px;
+  visibility: hidden;
+}
+
+.card {
+  height: 50px;
+  width: 30px;
+  border: solid;
+}
