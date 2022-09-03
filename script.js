@@ -12,6 +12,7 @@ const standBtn = document.getElementById("stand-btn");
 const newRoundBtn = document.getElementById("new-round-btn");
 
 let user = {
+  name: "User",
   hand: [],
   score: 0,
   isDealer: false,
@@ -21,6 +22,7 @@ let user = {
 };
 
 let dealer = {
+  name: "Dealer",
   hand: [],
   score: 0,
   isDealer: true,
@@ -120,7 +122,11 @@ function chooseHit(player) {
 }
 
 function updateBoard(player) {
-  scoreboard.textContent = player + "wins!";
+  if (player === "push") {
+    scoreboard.textContent = "Push! You're both winners!";
+  } else {
+    scoreboard.textContent = player.name + " wins!";
+  }
 }
 
 function determineWinner() {
