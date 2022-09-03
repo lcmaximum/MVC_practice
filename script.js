@@ -1,9 +1,29 @@
 //constants
+const dealerSpace = document.getElementById("dealer-space");
+const userSpace = document.getElementById("user-space");
+const scoreboard = document.getElementById("score-board");
+const dealerPoints = document.getElementById("dealer-points");
+const userPoints = document.getElementById("user-points");
 const userCard = document.getElementById("user-card");
 const dealerCard = document.getElementById("dealer-card");
 const dealBtn = document.getElementById("deal-btn");
 const hitBtn = document.getElementById("hit-btn");
+const standBtn = document.getElementById("stand-btn");
+const newRoundBtn = document.getElementById("new-round-btn");
 
+let user = {
+  hand: [],
+  score: 0,
+  isDealer: false,
+  space: userSpace,
+};
+
+let dealer = {
+  hand: [],
+  score: 0,
+  isDealer: true,
+  space: dealerSpace,
+};
 //state variables
 let deck = [];
 
@@ -17,7 +37,6 @@ function toggleVisibility(e) {
 }
 
 function shuffle() {
-  console.log("sup");
   deck = [];
   while (deck.length < 10) {
     let num = Math.ceil(Math.random() * 10);
@@ -25,16 +44,76 @@ function shuffle() {
       deck.push(num);
     }
   }
-  console.log(deck);
+
   return deck;
 }
+
+function calculateScore() {
+  dealer.score = 0;
+  user.score = 0;
+  for (let i = 0; i < dealer.hand.length; i++) {
+    dealer.score += dealer.hand[i];
+  }
+  for (let i = 0; i < user.hand.length; i++) {
+    user.score += user.hand[i];
+  }
+  console.log("dealer score", dealer.score);
+  console.log("user score", user.score);
+}
+
+function displayScore() {
+  dealerPoints.textContent = dealer.score;
+  userPoints.textContent = user.score;
+}
+
 function dealFirstRound() {
   shuffle();
+  toggleVisibility(scoreboard);
   toggleVisibility(dealBtn);
   toggleVisibility(hitBtn);
-  userCard.textContent = deck[0];
-  dealerCard.textContent = deck[1];
+  toggleVisibility(standBtn);
+
+  let newUserCard = deck.pop();
+  user.hand.push(newUserCard);
+  userCard.textContent = newUserCard;
+
+  let newDealerCard = deck.pop();
+  dealer.hand.push(newDealerCard);
+  dealerCard.textContent = newDealerCard;
+
+  calculateScore();
+  displayScore();
+
+  console.log("dealer hand", dealer.hand);
+  console.log("user hand", user.hand);
+  console.log("deck", deck);
+
+  return deck;
 }
+function chooseHit(player) {
+  console.log("deck: ", deck);
+  let extraCard = document.createElement("div");
+  extraCard.classList.add("card");
+  player.space.appendChild(extraCard);
+  let newCard = deck.pop();
+  player.hand.push(newCard);
+  extraCard.textContent = newCard;
+  calculateScore();
+  displayScore();
+}
+
+function chooseStand() {
+  toggleVisibility(hitBtn);
+  toggleVisibility(standBtn);
+  toggleVisibility(newRoundBtn);
+  while (dealer.score < 12) {
+    chooseHit(dealer);
+  }
+}
+
+function newRound() {}
 
 //event listeners
 dealBtn.addEventListener("click", dealFirstRound);
+hitBtn.addEventListener("click", chooseHit.bind(null, user));
+standBtn.addEventListener("click", chooseStand);

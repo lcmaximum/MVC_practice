@@ -7,16 +7,13 @@
    
     <script defer src="script.js"></script>
     <link href="style.css" rel="stylesheet"></link>
-    <link
-      href="https://fonts.googleapis.com/css?family=Bungee+Outline&display=swap"
-      rel="stylesheet"
-    />
-    <title>Event Delegation is cool!</title>
+
+    <title>Shuffle and MVC</title>
   </head>
   <body>
-    <div id='score-board'>
-      <div id='dealer-score'></div>
-      <div id='user-score'></div>
+    <div id='score-board' style="visibility:hidden">
+      <div id='dealer-score'>Dealer: <span id='dealer-points'>0</span></div>
+      <div id='user-score'>You: <span id='user-points'>0</span></div>
     </div>
 
 <div id='dealer-space' class='player-div'>
