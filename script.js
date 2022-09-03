@@ -15,6 +15,8 @@ let user = {
   hand: [],
   score: 0,
   isDealer: false,
+  isWinner: false,
+  bust: false,
   space: userSpace,
 };
 
@@ -22,10 +24,13 @@ let dealer = {
   hand: [],
   score: 0,
   isDealer: true,
+  isWinner: false,
+  bust: false,
   space: dealerSpace,
 };
 //state variables
 let deck = [];
+let push = false;
 
 //functions
 function toggleVisibility(e) {
@@ -56,6 +61,15 @@ function calculateScore() {
   }
   for (let i = 0; i < user.hand.length; i++) {
     user.score += user.hand[i];
+  }
+
+  if (dealer.score > 15) {
+    dealer.bust = true;
+    user.isWinner = true;
+  }
+  if (user.score > 15) {
+    user.bust = true;
+    dealer.isWinner = true;
   }
   console.log("dealer score", dealer.score);
   console.log("user score", user.score);
@@ -100,6 +114,25 @@ function chooseHit(player) {
   extraCard.textContent = newCard;
   calculateScore();
   displayScore();
+  if (user.bust || dealer.bust) {
+    determineWinner();
+  }
+}
+
+function updateBoard(player) {
+  scoreboard.textContent = player + "wins!";
+}
+
+function determineWinner() {
+  let winner = "";
+  if (user.bust || (!dealer.bust && user.score < dealer.score)) {
+    winner = dealer;
+  } else if (dealer.bust || (!user.bust && dealer.score < user.score)) {
+    winner = user;
+  } else {
+    winner = push;
+  }
+  return updateBoard(winner);
 }
 
 function chooseStand() {
@@ -109,6 +142,7 @@ function chooseStand() {
   while (dealer.score < 12) {
     chooseHit(dealer);
   }
+  determineWinner();
 }
 
 function newRound() {}
